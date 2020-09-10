@@ -1,2 +1,3 @@
 #!/bin/bash
-chmod -R a+X *
+chmod -R u+X,g+X,o+X *
+
