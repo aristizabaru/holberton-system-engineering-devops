@@ -1,4 +1,4 @@
 #!/bin/bash
-chmod -R u+X ./*
+chmod -R a+X ./*
 
 
