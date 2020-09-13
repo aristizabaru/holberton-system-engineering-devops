@@ -1,2 +1,2 @@
 #!/bin/bash
-find -type d | grep "./" -c
+find . -type d | grep "./" -c
