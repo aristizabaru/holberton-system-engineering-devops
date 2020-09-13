@@ -1,0 +1,2 @@
+#!/bin/bash
+tr A-Ac-c Z-Ze-e
