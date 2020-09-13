@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -type d -print | grep ^./ -c
+find . -maxdepth 2 -type d | grep ^./ -c
