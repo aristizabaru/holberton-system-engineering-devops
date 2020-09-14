@@ -1,2 +1,2 @@
 #!/bin/bash
-cut -s -f 1 | sort | uniq -c | sort -r | rev | cut -d" " -f1 | rev | head -n11
+cut -f 1 | sort | uniq -c | sort -r | rev | cut -d" " -f1 | rev | head -n11
