@@ -1,0 +1,2 @@
+#!/bin/bash
+cut -s -d "-" -f1 | sort | uniq | head -n11
