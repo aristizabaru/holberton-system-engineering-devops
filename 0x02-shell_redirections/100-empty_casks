@@ -1,0 +1,2 @@
+#!/bin/bash
+find . -mindepth 0 -empty | rev | cut -d/ -f1 | rev
