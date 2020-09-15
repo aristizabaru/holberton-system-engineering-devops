@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -e {a..n}{p..z}"\n"
+12-combinationsprintf "%s\n" {a..z}{a..z} | grep -v "oo"
