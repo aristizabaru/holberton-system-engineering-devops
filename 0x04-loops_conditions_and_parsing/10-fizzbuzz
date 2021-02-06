@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# isplays numbers from 1 to 100 using FizzBuzz game
+i=1
+while [ $i -le 100 ]
+do 
+   text=""
+   if [ $(( i % 3 )) -eq 0 ]
+   then
+      text+="Fizz"
+      echo $text
+   fi
+   if [ $(( i % 5 )) -eq 0 ]
+   then
+      text+="Buzz"
+      echo $text
+   fi
+   if [ $(( i % 3 )) -ne 0 ] && [ $(( i % 5 )) -ne 0 ]
+   then
+      echo $i
+   fi
+   (( i++ ))
+done
