@@ -7,16 +7,15 @@ do
    if [ $(( i % 3 )) -eq 0 ]
    then
       text+="Fizz"
-      echo $text
    fi
    if [ $(( i % 5 )) -eq 0 ]
    then
       text+="Buzz"
-      echo $text
    fi
-   if [ $(( i % 3 )) -ne 0 ] || [ $(( i % 5 )) -ne 0 ]
+   if [ $(( i % 3 )) -ne 0 ] && [ $(( i % 5 )) -ne 0 ]
    then
-      echo $i
+      text+=$i
    fi
+   echo $text
    (( i++ ))
 done
