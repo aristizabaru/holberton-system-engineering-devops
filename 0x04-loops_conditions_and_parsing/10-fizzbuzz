@@ -14,7 +14,7 @@ do
       text+="Buzz"
       echo $text
    fi
-   if [ $(( i % 3 )) -ne 0 ] && [ $(( i % 5 )) -ne 0 ]
+   if [ $(( i % 3 )) -ne 0 ] || [ $(( i % 5 )) -ne 0 ]
    then
       echo $i
    fi
