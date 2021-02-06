@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Displays content of the current directory
+for ITEM in *
+do
+   echo "$ITEM" | cut -d"-" -f2
+done
