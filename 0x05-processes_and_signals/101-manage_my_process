@@ -3,14 +3,14 @@
 do_start()
 {
 	./manage_my_process &
-	$! > /var/run/my_process.pid
+	echo "$!" > /var/run/my_process.pid
 	echo "manage_my_process started"
 }
 
 do_stop()
 {
 	pkill -F /var/run/my_process.pid
-	rm /var/run/my_process.pid
+	rm -f /var/run/my_process.pid
 	echo "manage_my_process stopped"
 }
 
@@ -18,7 +18,7 @@ do_reload()
 {
 	pkill -F /var/run/my_process.pid
 	./manage_my_process &
-	$! > /var/run/my_process.pid
+	echo "$!" > /var/run/my_process.pid
 	echo "manage_my_process restarted"
 }
 
