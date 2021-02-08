@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Stops 7-highlanderprocess
+kill -s SIGQUIT "$( ps -aux | awk '/7-highlander/ { print $2 }' | head -1 )"
