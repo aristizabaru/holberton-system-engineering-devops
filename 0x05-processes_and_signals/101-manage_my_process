@@ -16,7 +16,9 @@ do_stop()
 
 do_reload()
 {
-	do_stop && do_start
+	pkill -F /var/run/my_process.pid
+	./manage_my_process &
+	$! > /var/run/my_process.pid
 	echo "manage_my_process restarted"
 }
 
