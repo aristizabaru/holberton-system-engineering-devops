@@ -1,17 +1,17 @@
-# 0x04. Loops, conditions and parsing
+# 0x05. Processes and signals
 
 ## About
 
-This is an educational project to explore several concepts shell scripting
+This is an educational project to explore several concepts about processes and signals
 
 ## Topics
 
--  Create SSH keys
--  Advantage of using #!/usr/bin/env bash over #!/bin/bash
--  Use of `while`, `until` and `for` loops
--  Use of `if`, `else`, `elif` and `case` condition statements
--  Use of the `cut` command
--  Files and other comparison operators in shell scripting
+-  What is a PID
+-  What is a process
+-  How to find a process’ PID
+-  How to kill a process
+-  What is a signal
+-  What are the 2 signals that cannot be ignored
 
 ## Requirements
 
@@ -21,719 +21,514 @@ This is an educational project to explore several concepts shell scripting
 
 ## Requirements
 
-For this project, students are expected to look at this concept:  
-[Shell](https://intranet.hbtn.io/concepts/9)
-
-Introduction in DevOps:  
-[Video](https://www.youtube.com/watch?v=BC2neyc5GcI&feature=youtu.be)
-
 Read or watch:
 
--  [Loops sample](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_09_01.html)
--  [Variable assignment and arithmetic](https://tldp.org/LDP/abs/html/ops.html)
--  [Comparison operators](https://tldp.org/LDP/abs/html/fto.html)
--  [Make your scripts portable](https://www.cyberciti.biz/tips/finding-bash-perl-python-portably-using-env.html)
+-  [Linux PID](http://www.linfo.org/pid.html)
+-  [Linux process](https://www.thegeekstuff.com/2012/03/linux-processes-environment/)
+-  [Linux signal](https://www.thegeekstuff.com/2012/03/linux-signals-fundamentals/)
 
 man or help:
 
--  `cut`
--  `for`
--  `while`
--  `until`
--  `if`
+-  `ps`
+-  `pgrep`
+-  `pkill`
+-  `kill`
+-  `exit`
+-  `trap`
+
+more info:
+
+For those who want to know more and learn about all signals, check out [this article](https://www.computerhope.com/unix/signals.htm).
 
 ## File Descriptions
 
-This project is conceived to be carried out step by step, that is why the description of the files is presented as a statement.
+### 0. What is my PID
 
-**More Info**
-[Shellcheck](https://github.com/koalaman/shellcheck) is a tool that will help you write proper Bash scripts. It will make recommendations on your syntax and semantics and provide advice on edge cases that you might not have thought about. `Shellcheck` is your friend! All your Bash scripts must pass `Shellcheck` without any error or you will not get any points on the task.
+**[0-what-is-my-pid](0-what-is-my-pid)**
 
-Install `Shellchek` [here](https://github.com/koalaman/shellcheck#installing)
-
-For every feedback, `Shellcheck` will provide a code that you can use to get more information about the issue, for example for code `SC2034`, you can browse [https://github.com/koalaman/shellcheck/wiki/SC2034](https://github.com/koalaman/shellcheck/wiki/SC2034)
-
-### 0. Create a SSH RSA key pair
-
-Read for this task:
-
--  [Linux and Mac OS users](https://askubuntu.com/questions/61557/how-do-i-set-up-ssh-authentication-keys)
--  [Windows users](https://docs.rackspace.com/support/how-to/generating-rsa-keys-with-ssh-puttygen/)
-
-man: `ssh-keygen`
-
-Requirements:
-
--  Share your _public key_ in your answer file `0-RSA_public_key.pub`
--  Fill the `SSH public key` field of your [intranet profile](https://intranet.hbtn.io/users/my_profile) with the public key you just generated
--  _Keep the private key to yourself in a secure location_, you will use it later to connect to your servers using SSH. Some storing ideas are Dropbox, Google Drive, password manager, USB key. Failing to do so will prevent you to access your servers, which will prevent you from doing your projects
--  If you decide to add a passphrase to your key, make sure to save this passphrase in a secure location, you will not be able to use your keys without the passphrase
-
-SSH and RSA keys will be covered in depth in a later project.
-
-### 1. For Holberton School loop
-
-**[1-for_holberton_school](1-for_holberton_school)**
-
-Write a Bash script that displays `Holberton School` 10 times.
-
-Requirement:
-
-You must use the `for` loop (`while` and `until` are forbidden)
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+Write a Bash script that displays its own PID.
 
 ```
-sylvain@ubuntu$ head -n 2 1-for_holberton_school
-#!/usr/bin/env bash
-# This script is displaying "Holberton School" 10 times
-sylvain@ubuntu$ ./1-for_holberton_school
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
+sylvain@ubuntu$ ./0-what-is-my-pid
+4120
 sylvain@ubuntu$
 ```
 
-### 2. While Holberton School loop
+### 1. List your processes
 
-**[2-while_holberton_school](2-while_holberton_school)**
+**[1-list_your_processes](1-list_your_processes)**
 
-Write a Bash script that displays `Holberton School` 10 times.
-
-Requirements:
-
-You must use the `while` loop (`for` and `until` are forbidden)
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
-
-```
-sylvain@ubuntu$ ./2-while_holberton_school
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-sylvain@ubuntu$
-```
-
-### 3. Until Holberton School loop
-
-**[3-until_holberton_school](3-until_holberton_school)**
-
-Write a Bash script that displays `Holberton School` 10 times.
+Write a Bash script that displays a list of currently running processes.
 
 Requirements:
 
-You must use the `until` loop (`for` and `while` are forbidden)
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+-  Must show all processes, for all users, including those which might not have a TTY
+-  Display in a user-oriented format
+-  Show process hierarchy
 
 ```
-sylvain@ubuntu$ ./3-until_holberton_school
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
+sylvain@ubuntu$ ./1-list_your_processes | head -50
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         2  0.0  0.0      0     0 ?        S    Feb13   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [ksoftirqd/0]
+root         4  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [kworker/0:0]
+root         5  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [kworker/0:0H]
+root         7  0.0  0.0      0     0 ?        S    Feb13   0:02  \_ [rcu_sched]
+root         8  0.0  0.0      0     0 ?        S    Feb13   0:03  \_ [rcuos/0]
+root         9  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [rcu_bh]
+root        10  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [rcuob/0]
+root        11  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [migration/0]
+root        12  0.0  0.0      0     0 ?        S    Feb13   0:02  \_ [watchdog/0]
+root        13  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [khelper]
+root        14  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [kdevtmpfs]
+root        15  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [netns]
+root        16  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [writeback]
+root        17  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [kintegrityd]
+root        18  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [bioset]
+root        19  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [kworker/u3:0]
+root        20  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [kblockd]
+root        21  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [ata_sff]
+root        22  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [khubd]
+root        23  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [md]
+root        24  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [devfreq_wq]
+root        25  0.0  0.0      0     0 ?        S    Feb13   0:41  \_ [kworker/0:1]
+root        27  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [khungtaskd]
+root        28  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [kswapd0]
+root        29  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [vmstat]
+root        30  0.0  0.0      0     0 ?        SN   Feb13   0:00  \_ [ksmd]
+root        31  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [fsnotify_mark]
+root        32  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [ecryptfs-kthrea]
+root        33  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [crypto]
+root        45  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [kthrotld]
+root        46  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [kworker/u2:1]
+root        65  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [deferwq]
+root        66  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [charger_manager]
+root       108  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [kpsmoused]
+root       125  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [scsi_eh_0]
+root       126  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [kworker/u2:2]
+root       172  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [jbd2/sda1-8]
+root       173  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [ext4-rsv-conver]
+root       409  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [iprt]
+root       549  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [kworker/u3:1]
+root       808  0.0  0.0      0     0 ?        S    Feb13   0:00  \_ [kauditd]
+root       834  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [rpciod]
+root       846  0.0  0.0      0     0 ?        S<   Feb13   0:00  \_ [nfsiod]
+root         1  0.0  0.4  33608  2168 ?        Ss   Feb13   0:00 /sbin/init
+root       373  0.0  0.0  19472   408 ?        S    Feb13   0:00 upstart-udev-bridge --daemon
+root       378  0.0  0.2  49904  1088 ?        Ss   Feb13   0:00 /lib/systemd/systemd-udevd --daemon
+root       518  0.0  0.1  23416   644 ?        Ss   Feb13   0:00 rpcbind
+statd      547  0.0  0.1  21536   852 ?        Ss   Feb13   0:00 rpc.statd -L
 sylvain@ubuntu$
 ```
 
-### 4. If 9, say Hi!
+### 2. Show your Bash PID
 
-**[4-if_9_say_hi](4-if_9_say_hi)**
+**[2-show_your_bash_pid](2-show_your_bash_pid)**
 
-Write a Bash script that displays `Holberton School` 10 times, but for the 9th iteration, displays `Holberton School` and then `Hi` on a new line.
+Using your previous exercise command, write a Bash script that displays lines containing the `bash` word, thus allowing you to easily get the PID of your Bash process.
 
 Requirements:
 
-You must use the `while` loop (`for` and `until` are forbidden)
-You must use the `if` statement
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+-  You cannot use `pgrep`
+-  The third line of your script must be `# shellcheck disable=SC2009` (for more info about ignoring `shellcheck` error [here](https://github.com/koalaman/shellcheck/wiki/Ignore))
 
 ```
-sylvain@ubuntu$ ./4-if_9_say_hi
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Holberton School
-Hi
-Holberton School
+sylvain@ubuntu$ sylvain@ubuntu$ ./2-show_your_bash_pid
+sylvain   4404  0.0  0.7  21432  4000 pts/0    Ss   03:32   0:00          \_ -bash
+sylvain   4477  0.0  0.2  11120  1352 pts/0    S+   03:40   0:00              \_ bash ./2-show_your_bash_PID
+sylvain   4479  0.0  0.1  10460   912 pts/0    S+   03:40   0:00                  \_ grep bash
 sylvain@ubuntu$
 ```
 
-### 5. 4 bad luck, 8 is your chance
+Here we can see that my Bash PID is `4404`.
 
-**[5-4_bad_luck_8_is_your_chance](5-4_bad_luck_8_is_your_chance)**
+### 3. Show your Bash PID made easy
 
-Write a Bash script that loops from 1 to 10 and:
+**[3-show_your_bash_pid_made_easy](3-show_your_bash_pid_made_easy)**
 
--  displays `bad luck` for the 4th loop iteration
--  displays `good luck` for the 8th loop iteration
--  displays `Holberton School` for the other iterations
+Write a Bash script that displays the PID, along with the process name, of processes whose name contain the word `bash`.
 
 Requirements:
 
--  You must use the `while` loop (`for` and `until` are forbidden)
--  You must use the `if`, `elif` and `else` statements
-
-For the most curious:
-
--  [8 in the Chinese culture](https://freakonomics.com/2006/07/05/lucky-8s-in-china/)
--  [4 in the Chinese culture](https://en.wikipedia.org/wiki/Chinese_numerology#Four)
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+-  You cannot use `ps`
 
 ```
-sylvain@ubuntu$ ./5-4_bad_luck_8_is_your_chance
-Holberton School
-Holberton School
-Holberton School
-bad luck
-Holberton School
-Holberton School
-Holberton School
-good luck
-Holberton School
-Holberton School
+sylvain@ubuntu$ ./3-show_your_bash_pid_made_easy
+4404 bash
+4555 bash
+sylvain@ubuntu$ ./3-show_your_bash_pid_made_easy
+4404 bash
+4557 bash
 sylvain@ubuntu$
 ```
 
-### 6. Superstitious numbers
+Here we can see that:
 
-**[6-superstitious_numbers](6-superstitious_numbers)**
+-  For the first iteration: `bash` PID is `4404` and that the `3-show_your_bash_pid_made_easy` script PID is `4555`
+-  For the second iteration: `bash` PID is `4404` and that the `3-show_your_bash_pid_made_easy` script PID is `4557`
 
-Write a Bash script that displays numbers from 1 to 20 and:
+### 4. To infinity and beyond
 
--  displays `4` and then `bad luck from China` for the 4th loop iteration
--  displays `9` and then `bad luck from Japan` for the 9th loop iteration
--  displays `17` and then `bad luck from Italy` for the 17th loop iteration
+**[4-to_infinity_and_beyond](4-to_infinity_and_beyond)**
+
+Write a Bash script that displays `To infinity and beyond` indefinitely.
 
 Requirements:
 
--  You must use the `while` loop (`for` and `until` are forbidden)
--  You must use the `case` statement
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+-  In between each iteration of the loop, add a `sleep 2`
 
 ```
-sylvain@ubuntu$ ./6-superstitious_numbers
-1
-2
-3
-4
-bad luck from China
-5
-6
-7
-8
-9
-bad luck from Japan
-10
-11
-12
-13
-14
-15
-16
-17
-bad luck from Italy
-18
-19
-20
+sylvain@ubuntu$ ./4-to_infinity_and_beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+^C
 sylvain@ubuntu$
 ```
 
-### 7. Clock
+Note that I `ctrl+c` (killed) the Bash script in the example.
 
-**[7-clock](7-clock)**
+### 5. Don't stop me now!
 
-Write a Bash script that displays the time for 12 hours and 59 minutes:
+**[5-dont_stop_me_now](5-dont_stop_me_now)**
 
--  display hours from 0 to 12
--  display minutes from 1 to 59
+We stopped our `4-to_infinity_and_beyond` process using `ctrl+c` in the previous task, there is actually another way to do this.
+
+Write a Bash script that stops 4`-to_infinity_and_beyond` process.
 
 Requirements:
 
--  You must use the `while` loop (`for` and `until` are forbidden)
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+-  You must use `kill`
+   Terminal #0
 
 ```
-sylvain@ubuntu$ ./7-clock | head -n 70
-Hour: 0
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-Hour: 1
-1
-2
-3
-4
-5
-6
-7
-8
-9
+sylvain@ubuntu$ ./4-to_infinity_and_beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+Terminated
 sylvain@ubuntu$
 ```
 
-### 8. For ls
+Terminal #1
 
-**[8-for_ls](8-for_ls)**
+```
+sylvain@ubuntu$ ./5-dont_stop_me_now
+sylvain@ubuntu$
+```
+
+I opened 2 terminals in this example, started by running my [4-to_infinity_and_beyond] Bash script in terminal #0 and then moved on terminal #1 to run `5-dont_stop_me_now`. We can then see in terminal #0 that my process has been terminated.
+
+### 6. Stop me if you can
+
+**[6-stop_me_if_you_can](6-stop_me_if_you_can)**
+
+Write a Bash script that stops `4-to_infinity_and_beyond` process.
+
+Requirements:
+
+-  You cannot use `kill` or `killall`
+   Terminal #0
+
+```
+sylvain@ubuntu$ ./4-to_infinity_and_beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+Terminated
+sylvain@ubuntu$
+```
+
+Terminal #1
+
+```
+sylvain@ubuntu$ ./6-stop_me_if_you_can
+sylvain@ubuntu$
+```
+
+I opened 2 terminals in this example, started by running my `4-to_infinity_and_beyond` Bash script in terminal #0 and then moved on terminal #1 to run `6-stop_me_if_you_can`. We can then see in terminal #0 that my process has been terminated.
+
+### 7. Highlander
+
+**[7-highlander](7-highlander)**
 
 Write a Bash script that displays:
 
--  The content of the current directory
--  In a list format
--  Where only the part of the name after the first dash is displayed (refer to the example)
+-  To `infinity and beyond` indefinitely
+-  With a `sleep 2` in between each iteration
+-  `I am invincible!!!` when receiving a `SIGTERM` signal
 
-Requirements:
+Make a copy of your `6-stop_me_if_you_can` script, name it `67-stop_me_if_you_can`, that kills the `7-highlander` process instead of the `4-to_infinity_and_beyond` one.
 
--  You must use the `for` loop (`while` and `until` are forbidden)
--  Do not display hidden files
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+Terminal #0
 
 ```
-sylvain@ubuntu$ ls
-100-read_and_cut              1-for_holberton_school         6-superstitious_numbers
-101-tell_the_story_of_passwd  2-while_holberton_school       7-clock
-102-lets_parse_apache_logs    3-until_holberton_school       8-for_ls
-103-dig_the-data              4-if_9_say_hi                  9-to_file_or_not_to_file
-10-fizzbuzz                   5-4_bad_luck_8_is_your_chance
-sylvain@ubuntu$  ./8-for_ls
-read_and_cut
-tell_the_story_of_passwd
-lets_parse_apache_logs
-dig_the-data
-fizzbuzz
-for_holberton_school
-while_holberton_school
-until_holberton_school
-if_9_say_hi
-4_bad_luck_8_is_your_chance
-superstitious_numbers
-clock
-for_ls
-to_file_or_not_to_file
+sylvain@ubuntu$ ./7-highlander
+To infinity and beyond
+To infinity and beyond
+I am invincible!!!
+To infinity and beyond
+I am invincible!!!
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+I am invincible!!!
+To infinity and beyond
+^C
 sylvain@ubuntu$
 ```
 
-### 9. To file, or not to file
-
-**[9-to_file_or_not_to_file](9-to_file_or_not_to_file)**
-
-Write a Bash script that gives you information about the `holbertonschool` file.
-
-Requirements:
-
--  You must use `if` and, `else` (`case` is forbidden)
--  Your Bash script should check if the file exists and print:
-   -  if the file exists: `holbertonschool file exists`
-   -  if the file does not exist: `holbertonschool file does not exist`
--  If the file exists, print:
-   -  if the file is empty: `holbertonschool file is empty`
-   -  if the file is not empty: `holbertonschool file is not empty`
-   -  if the file is a regular file: `holbertonschool is a regular file`
-   -  if the file is not a regular file: (nothing)
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+Terminal #1
 
 ```
-sylvain@ubuntu$ file holbertonschool
-holbertonschool: cannot open `holbertonschool' (No such file or directory)
-sylvain@ubuntu$ ./9-to_file_or_not_to_file
-holbertonschool file does not exist
-sylvain@ubuntu$ touch holbertonschool
-sylvain@ubuntu$ ./9-to_file_or_not_to_file
-holbertonschool file exists
-holbertonschool file is empty
-holbertonschool is a regular file
-sylvain@ubuntu$ echo 'betty' > holbertonschool
-sylvain@ubuntu$ ./9-to_file_or_not_to_file
-holbertonschool file exists
-holbertonschool file is not empty
-holbertonschool is a regular file
-sylvain@ubuntu$ rm holbertonschool
-sylvain@ubuntu$ mkdir holbertonschool
-sylvain@ubuntu$ ./9-to_file_or_not_to_file
-holbertonschool file exists
-holbertonschool file is not empty
+sylvain@ubuntu$ ./67-stop_me_if_you_can
+sylvain@ubuntu$ ./67-stop_me_if_you_can
+sylvain@ubuntu$ ./67-stop_me_if_you_can
 sylvain@ubuntu$
 ```
 
-### 10. FizzBuzz
+I started `7-highlander` in Terminal #0 and then run `67-stop_me_if_you_can` in terminal #1, for every iteration we can see `I am invincible!!!` appearing in terminal #0.
 
-**[10-fizzbuzz](10-fizzbuzz)**
+### 8. Beheaded process mandatory
 
-Write a Bash script that displays numbers from 1 to 100.
+**[8-beheaded_process](8-beheaded_process)**
 
-Requirements:
+Write a Bash script that kills the process `7-highlander`.
 
--  Displays `FizzBuzz` when the number is a multiple of 3 and 5
--  Displays `Fizz` when the number is multiple of 3
--  Displays `Buzz` when the number is a multiple of 5
--  Otherwise, displays the number
--  In a list format
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+Terminal #0
 
 ```
-sylvain@ubuntu$ ./10-fizzbuzz | head -20
-1
-2
-Fizz
-4
-Buzz
-Fizz
-7
-8
-Fizz
-Buzz
-11
-Fizz
-13
-14
-FizzBuzz
-16
-17
-Fizz
-19
-Buzz
+sylvain@ubuntu$ ./7-highlander
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+Killed
 sylvain@ubuntu$
 ```
 
-### 11. Read and cut
-
-**[100-read_and_cut](100-read_and_cut)**
-
-help: `read`
-
-Write a Bash script that displays the content of the file `/etc/passwd`.
-
-Your script should only display:
-
--  username
--  user id
--  Home directory path for the user
-
-Requirements:
-
--  You must use the `while` loop (`for` and `until` are forbidden)
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+Terminal #1
 
 ```
-sylvain@ubuntu$ cat /etc/passwd
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
-bin:x:2:2:bin:/bin:/usr/sbin/nologin
-sys:x:3:3:sys:/dev:/usr/sbin/nologin
-sync:x:4:65534:sync:/bin:/bin/sync
-games:x:5:60:games:/usr/games:/usr/sbin/nologin
-man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
-lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
-mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
-news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
-uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
-proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
-www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
-backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
-list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
-irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
-gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
-nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
-libuuid:x:100:101::/var/lib/libuuid:
-syslog:x:101:104::/home/syslog:/bin/false
-messagebus:x:102:106::/var/run/dbus:/bin/false
-landscape:x:103:109::/var/lib/landscape:/bin/false
-sshd:x:104:65534::/var/run/sshd:/usr/sbin/nologin
-pollinate:x:105:1::/var/cache/pollinate:/bin/false
-vagrant:x:1000:1000::/home/vagrant:/bin/bash
-colord:x:106:112:colord colour management daemon,,,:/var/lib/colord:/bin/false
-statd:x:107:65534::/var/lib/nfs:/bin/false
-sylvain:98:99:Sylvain:/home/sylvain:/bin/bash
-puppet:x:108:114:Puppet configuration management daemon,,,:/var/lib/puppet:/bin/false
-ubuntu:x:1001:1001:Ubuntu:/home/ubuntu:/bin/bash
-sylvain@ubuntu$ ./100-read_and_cut
-root:0:/root
-daemon:1:/usr/sbin
-bin:2:/bin
-sys:3:/dev
-sync:4:/bin
-games:5:/usr/games
-man:6:/var/cache/man
-lp:7:/var/spool/lpd
-mail:8:/var/mail
-news:9:/var/spool/news
-uucp:10:/var/spool/uucp
-proxy:13:/bin
-www-data:33:/var/www
-backup:34:/var/backups
-list:38:/var/list
-irc:39:/var/run/ircd
-gnats:41:/var/lib/gnats
-nobody:65534:/nonexistent
-libuuid:100:/var/lib/libuuid
-syslog:101:/home/syslog
-messagebus:102:/var/run/dbus
-landscape:103:/var/lib/landscape
-sshd:104:/var/run/sshd
-pollinate:105:/var/cache/pollinate
-vagrant:1000:/home/vagrant
-colord:106:/var/lib/colord
-statd:107:/var/lib/nfs
-sylvain:99:/bin/bash
-puppet:108:/var/lib/puppet
-ubuntu:1001:/home/ubuntu
+sylvain@ubuntu$ ./8-beheaded_process
 sylvain@ubuntu$
 ```
 
-### 12. Tell the story of passwd
+I started `7-highlander` in Terminal #0 and then run `8-beheaded_process` in terminal #1 and we can see that the `7-highlander` has been killed.
 
-**[101-tell_the_story_of_passwd](101-tell_the_story_of_passwd)**
+### 9. Process and PID file
+
+**[100-process_and_pid_file](100-process_and_pid_files)**
+
+Write a Bash script that:
+
+-  Creates the file `/var/run/holbertonscript.pid` containing its PID
+-  Displays `To infinity and beyond` indefinitely
+-  Displays `I hate the kill command` when receiving a SIGTERM signal
+-  Displays `Y U no love me?!` when receiving a SIGINT signal
+-  Deletes the file `/var/run/holbertonscript.pid` and terminates itself when receiving a SIGQUIT or SIGTERM signal
+
+```
+sylvain@ubuntu$ sudo ./100-process_and_pid_file
+To infinity and beyond
+To infinity and beyond
+^CY U no love me?!
+```
+
+Executing the `100-process_and_pid_file` script and killing it with `ctrl+c`.
+
+Terminal #0
+
+```
+sylvain@ubuntu$ sudo ./100-process_and_pid_file
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+To infinity and beyond
+I hate the kill command
+sylvain@ubuntu$
+```
+
+Terminal #1
+
+```
+sylvain@ubuntu$ sudo pkill -f 100-process_and_pid_file
+sylvain@ubuntu$
+```
+
+Starting `100-process_and_pid_file` in the terminal #0 and then killing it in the terminal #1.
+
+### 10. Manage my process
+
+**[101-manage_my_process](101-manage_my_process)**  
+**[manage_my_process](manage_my_process)**
 
 Read:
 
--  [IFS (internal field separator)](https://tldp.org/LDP/abs/html/internalvariables.html)
--  [Understanding /etc/passwd](https://www.cyberciti.biz/faq/understanding-etcpasswd-file-format/)
+-  [&](https://bashitout.com/2013/05/18/Ampersands-on-the-command-line.html)
+-  [init.d](https://www.ghacks.net/2009/04/04/get-to-know-linux-the-etcinitd-directory/)
+-  [Daemon](https://en.wikipedia.org/wiki/Daemon_%28computing%29)
+-  [Positional parameters](https://www.gnu.org/software/bash/manual/html_node/Positional-Parameters.html)
 
-The file `/etc/passwd` has already been covered in a [previous project](https://intranet.hbtn.io/projects/208) and you should be familiar with it. Today we will make up a story based on it.
+man: sudo
 
-Write a Bash script that displays the content of the file `/etc/passwd`, using the while loop + IFS.
+Programs that are detached from the terminal and running in the background are called daemons or processes, need to be managed. The general minimum set of instructions is: `start`, `restart` and `stop`. The most popular way of doing so on Unix system is to use the init scripts.
 
-Format: `The user USERNAME is part of the GROUP_ID gang, lives in HOME_DIRECTORY and rides COMMAND/SHELL. USER ID's place is protected by the passcode PASSWORD, more info about the user here: USER ID INFO`
+Write a `manage_my_process` Bash script that:
 
-Requirements:
+-  Indefinitely writes `I am alive!` to the file `/tmp/my_process`
+-  In between every `I am alive!` message, the program should pause for 2 seconds
 
-You must use the `while` loop (`for` and `until` are forbidden)
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
-
-```
-sylvain@ubuntu$ ./101-tell_the_story_of_passwd
-The user root is part of the 0 gang, lives in /root and rides /bin/bash. 0's place is protected by the passcode x, more info about the user here: root
-The user daemon is part of the 1 gang, lives in /usr/sbin and rides /usr/sbin/nologin. 1's place is protected by the passcode x, more info about the user here: daemon
-The user bin is part of the 2 gang, lives in /bin and rides /usr/sbin/nologin. 2's place is protected by the passcode x, more info about the user here: bin
-The user sys is part of the 3 gang, lives in /dev and rides /usr/sbin/nologin. 3's place is protected by the passcode x, more info about the user here: sys
-The user sync is part of the 65534 gang, lives in /bin and rides /bin/sync. 4's place is protected by the passcode x, more info about the user here: sync
-The user games is part of the 60 gang, lives in /usr/games and rides /usr/sbin/nologin. 5's place is protected by the passcode x, more info about the user here: games
-The user man is part of the 12 gang, lives in /var/cache/man and rides /usr/sbin/nologin. 6's place is protected by the passcode x, more info about the user here: man
-The user lp is part of the 7 gang, lives in /var/spool/lpd and rides /usr/sbin/nologin. 7's place is protected by the passcode x, more info about the user here: lp
-The user mail is part of the 8 gang, lives in /var/mail and rides /usr/sbin/nologin. 8's place is protected by the passcode x, more info about the user here: mail
-The user news is part of the 9 gang, lives in /var/spool/news and rides /usr/sbin/nologin. 9's place is protected by the passcode x, more info about the user here: news
-The user uucp is part of the 10 gang, lives in /var/spool/uucp and rides /usr/sbin/nologin. 10's place is protected by the passcode x, more info about the user here: uucp
-The user proxy is part of the 13 gang, lives in /bin and rides /usr/sbin/nologin. 13's place is protected by the passcode x, more info about the user here: proxy
-The user www-data is part of the 33 gang, lives in /var/www and rides /usr/sbin/nologin. 33's place is protected by the passcode x, more info about the user here: www-data
-The user backup is part of the 34 gang, lives in /var/backups and rides /usr/sbin/nologin. 34's place is protected by the passcode x, more info about the user here: backup
-The user list is part of the 38 gang, lives in /var/list and rides /usr/sbin/nologin. 38's place is protected by the passcode x, more info about the user here: Mailing List Manager
-The user irc is part of the 39 gang, lives in /var/run/ircd and rides /usr/sbin/nologin. 39's place is protected by the passcode x, more info about the user here: ircd
-The user gnats is part of the 41 gang, lives in /var/lib/gnats and rides /usr/sbin/nologin. 41's place is protected by the passcode x, more info about the user here: Gnats Bug-Reporting System (admin)
-The user nobody is part of the 65534 gang, lives in /nonexistent and rides /usr/sbin/nologin. 65534's place is protected by the passcode x, more info about the user here: nobody
-The user libuuid is part of the 101 gang, lives in /var/lib/libuuid and rides . 100's place is protected by the passcode x, more info about the user here:
-The user syslog is part of the 104 gang, lives in /home/syslog and rides /bin/false. 101's place is protected by the passcode x, more info about the user here:
-The user messagebus is part of the 106 gang, lives in /var/run/dbus and rides /bin/false. 102's place is protected by the passcode x, more info about the user here:
-The user landscape is part of the 109 gang, lives in /var/lib/landscape and rides /bin/false. 103's place is protected by the passcode x, more info about the user here:
-The user sshd is part of the 65534 gang, lives in /var/run/sshd and rides /usr/sbin/nologin. 104's place is protected by the passcode x, more info about the user here:
-The user pollinate is part of the 1 gang, lives in /var/cache/pollinate and rides /bin/false. 105's place is protected by the passcode x, more info about the user here:
-The user vagrant is part of the 1000 gang, lives in /home/vagrant and rides /bin/bash. 1000's place is protected by the passcode x, more info about the user here:
-The user colord is part of the 112 gang, lives in /var/lib/colord and rides /bin/false. 106's place is protected by the passcode x, more info about the user here: colord colour management daemon,,,
-The user statd is part of the 65534 gang, lives in /var/lib/nfs and rides /bin/false. 107's place is protected by the passcode x, more info about the user here:
-The user puppet is part of the 114 gang, lives in /var/lib/puppet and rides /bin/false. 108's place is protected by the passcode x, more info about the user here: Puppet configuration management daemon,,,
-The user ubuntu is part of the 1001 gang, lives in /home/ubuntu and rides /bin/bash. 1001's place is protected by the passcode x, more info about the user here: Ubuntu
-sylvain@ubuntu$
-```
-
-### 13. Let's parse Apache logs
-
-**[102-lets_parse_apache_logs](102-lets_parse_apache_logs)**
-
-[Apache](https://en.wikipedia.org/wiki/Apache_HTTP_Server) is among the most popular web servers in the world, serving 50% of all active websites, no doubt that you will have to interact with it within your career.
-
-As a Full-Stack Software Engineer, you have to master the art of parsing log files. Today we will do a simple parsing of [Apache log access files](http://intranet-projects-files.s3.amazonaws.com/holbertonschool-sysadmin_devops/80/apache-access.log).
-
-Today the Customer Support department reported that a user reported that the site is being “buggy”. Not being a detailed description, you want to have a look at the Apache logs and gather data about the traffic.
-
-Write a Bash script that displays the visitor IP along with the [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) from the Apache log file.
-
-Requirement:
-
--  Format: IP HTTP_CODE
-   -  in a list format
-   -  See example
--  You must use `awk`
--  You are not allowed to use `while`, `for`, `until` and `cut`
--  Download and commit the [apache-access.log file](http://intranet-projects-files.s3.amazonaws.com/holbertonschool-sysadmin_devops/80/apache-access.log) along with your answers files
-
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
-
-```
-sylvain@ubuntu$ ./102-lets_parse_apache_logs | tail -n 10
-185.130.5.207 301
-185.130.5.207 301
-91.224.140.223 200
-62.210.142.23 304
-92.222.20.166 304
-180.76.15.19 200
-2.1.201.36 304
-198.58.99.82 304
-50.116.30.23 304
-209.133.111.211 200
-sylvain@ubuntu$
-```
-
-### 14. Dig the data
-
-**[103-dig_the-data](103-dig_the-data)**
-
-Now that you’ve parsed the Apache log file, let’s sort the data so you can get a better idea of what is going on.
-
-Using what you did in the previous exercise, write a Bash script that groups visitors by IP and HTTP status code, and displays this data.
+Write Bash (init) script `101-manage_my_process` that manages `manage_my_process`. (both files need to be pushed to git)
 
 Requirements:
 
--  The exact format must be:
-   -  OCCURENCE_NUMBER IP HTTP_CODE
-   -  In list format
--  Ordered from the greatest to the lowest number of occurrences
-   -  See example
--  You must use `awk`
--  You are not allowed to use `while`, `for`, `until` and `cut`
+-  When passing the argument `start`:
+   -  Starts `manage_my_process`
+   -  Creates a file containing its PID in `/var/run/my_process.pid`
+   -  Displays `manage_my_process started`
+-  When passing the argument `stop`:
+   -  Stops `manage_my_process`
+   -  Deletes the file `/var/run/my_process.pid`
+   -  Displays `manage_my_process stopped`
+-  When passing the argument `restart`
+   -  Stops `manage_my_process`
+   -  Deletes the file `/var/run/my_process.pid`
+   -  Starts `manage_my_process`
+   -  Creates a file containing its PID in `/var/run/my_process.pid`
+   -  Displays `manage_my_process restarted`
+-  Displays `Usage: manage_my_process {start|stop|restart}` if any other argument or no argument is passed
 
-Note that:
-
--  The first line of my Bash script starts with `#!/usr/bin/env bash`
--  The second line of my Bash scripts is a comment explaining what it is doing
+Note that this init script is far from being perfect (but good enough for the sake of manipulating process and PID file), for example we do not handle the case where we check if a process is already running when doing `./101-manage_my_process start`, in our case it will simply create a new process instead of saying that it is already started.
 
 ```
-sylvain@ubuntu$ ./103-dig_the-data | head -n 10
-    141 130.0.236.153 200
-    140 62.210.250.66 200
-    117 103.243.26.232 404
-    67 195.154.172.143 200
-    60 78.154.190.29 200
-    45 195.154.172.59 200
-    41 62.210.248.185 200
-    41 167.114.156.198 200
-    36 2.1.201.36 304
-    36 195.154.172.53 200
+sylvain@ubuntu$ sudo ./101-manage_my_process
+Usage: manage_my_process {start|stop|restart}
+sylvain@ubuntu$ sudo ./101-manage_my_process start
+manage_my_process started
+sylvain@ubuntu$ tail -f -n0 /tmp/my_process
+I am alive!
+I am alive!
+I am alive!
+I am alive!
+^C
+sylvain@ubuntu$ sudo ./101-manage_my_process stop
+manage_my_process stopped
+sylvain@ubuntu$ cat /var/run/my_process.pid
+cat: /var/run/my_process.pid: No such file or directory
+sylvain@ubuntu$ tail -f -n0 /tmp/my_process
+^C
+sylvain@ubuntu$ sudo ./101-manage_my_process start
+manage_my_process started
+sylvain@ubuntu$ cat /var/run/my_process.pid
+11864
+sylvain@ubuntu$ sudo ./101-manage_my_process restart
+manage_my_process restarted
+sylvain@ubuntu$ cat /var/run/my_process.pid
+11918
+sylvain@ubuntu$ tail -f -n0 /tmp/my_process
+I am alive!
+I am alive!
+I am alive!
+^C
 sylvain@ubuntu$
 ```
+
+### 11. Zombie
+
+**[102-zombie.c](102-zombie.c)**
+
+Read [what a zombie process is](https://zombieprocess.wordpress.com/what-is-a-zombie-process/).
+
+Write a C program that creates 5 zombie processes.
+
+Requirements:
+
+-  For every zombie process created, it displays `Zombie process created, PID: ZOMBIE_PID`
+-  Your code should use the Betty style. It will be checked using `betty-style.pl` and `betty-doc.pl`
+-  When your code is done creating the parent process and the zombies, use the function bellow
+
+```
+int infinite_while(void)
+{
+    while (1)
+    {
+        sleep(1);
+    }
+    return (0);
+}
+```
+
+Example:
+
+Terminal #0
+
+```
+sylvain@ubuntu$ gcc 102-zombie.c -o zombie
+sylvain@ubuntu$ ./zombie
+Zombie process created, PID: 13527
+Zombie process created, PID: 13528
+Zombie process created, PID: 13529
+Zombie process created, PID: 13530
+Zombie process created, PID: 13531
+^C
+sylvain@ubuntu$
+```
+
+Terminal #1
+
+```
+sylvain@ubuntu$ ps aux | grep -e 'Z+.*<defunct>'
+sylvain  13527  0.0  0.0      0     0 pts/0    Z+   01:19   0:00 [zombie] <defunct>
+sylvain  13528  0.0  0.0      0     0 pts/0    Z+   01:19   0:00 [zombie] <defunct>
+sylvain  13529  0.0  0.0      0     0 pts/0    Z+   01:19   0:00 [zombie] <defunct>
+sylvain  13530  0.0  0.0      0     0 pts/0    Z+   01:19   0:00 [zombie] <defunct>
+sylvain  13531  0.0  0.0      0     0 pts/0    Z+   01:19   0:00 [zombie] <defunct>
+sylvain  13533  0.0  0.1  10460   964 pts/2    S+   01:19   0:00 grep --color=auto -e Z+.*<defunct>
+sylvain@ubuntu$
+```
+
+In Terminal #0, I start by compiling `102-zombie.c` and executing `zombie` which creates 5 zombie processes. In Terminal #1, I display the list of processes and look for lines containing `Z+.*<defunct>` which catches zombie process.
+
+### 12. Screencast
+
+Now that you have mastered signals, how about sharing your knowledge?
+
+Create a screencast where you live-code/demo something related to Unix signals.
+
+Requirements:
+
+-  Step by step video
+-  Two minutes of above
+-  Done in English
+-  Published to Youtube
+
+While you are free to choose the recording system to record the screencast, I highly recommend [screencast-o-matic](https://screencast-o-matic.com/).
