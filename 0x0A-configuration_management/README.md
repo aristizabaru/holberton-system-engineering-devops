@@ -40,6 +40,7 @@ $ gem install puppet-lint -v 2.1.1
 -  [Puppet’s Declarative Language: Modeling Instead of Scripting](https://puppet.com/blog/puppets-declarative-language-modeling-instead-of-scripting/)
 - [Puppet lint](http://puppet-lint.com/)
 - [Puppet emacs mode](https://github.com/voxpupuli/puppet-mode)
+- [Puppet sdlib reference classes](https://github.com/puppetlabs/puppetlabs-stdlib/blob/main/REFERENCE.md#file_line)
 
 ## File Descriptions
 
