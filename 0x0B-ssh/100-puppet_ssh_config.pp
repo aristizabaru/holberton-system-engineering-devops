@@ -9,6 +9,6 @@ file_line { 'Set IdentityFile':
 file_line { 'Set PasswordAuthentication':
   ensure => present,
   path   => '/etc/ssh/ssh_config',
-  line   => 'PasswordAuthentication no'
+  line   => 'PasswordAuthentication no',
 }
 
