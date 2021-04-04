@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
+# Creates ssh key pair with name holberton and codename betty
 ssh-keygen -f holberton -b 4096 -N betty
