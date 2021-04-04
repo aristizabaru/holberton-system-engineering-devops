@@ -4,7 +4,7 @@
 
 This is an educational project to explore several concepts about DevOps and software configuration management with technologies as Puppet.
 
-**INTRO VIDEO**
+**INTRO VIDEO**  
 [Intro to configuration management](https://www.youtube.com/watch?v=ogYLFyp68cI&feature=youtu.be)
 
 ## Topics
