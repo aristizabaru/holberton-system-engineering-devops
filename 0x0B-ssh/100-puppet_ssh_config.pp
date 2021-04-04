@@ -1,6 +1,4 @@
 # Configure config global file
-include stdlib
-
 file_line { 'Set IdentityFile':
   ensure => 'present',
   path   => '/etc/ssh/ssh_config',
