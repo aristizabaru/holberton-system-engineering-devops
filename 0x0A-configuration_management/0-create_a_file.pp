@@ -1,3 +1,4 @@
+# Craete file in tmp -> holberton
 file { '/tmp/holberton':
 ensure  => 'file',
 content => 'I love Puppet',
