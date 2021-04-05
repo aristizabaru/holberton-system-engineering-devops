@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Install an apache server and set root page to print 'Hello Holberton'
+sudo apt update
+sudo apt install apache2 -y
+echo "Hello Holberton" > /var/www/html/index.html
+# start daemon
+sudo service apache2 start
