@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Install nginx server
+apt-get update
+apt-get install nginx -y
+# change content of default_server
+sudo chmod 666 /var/www/html/index.nginx-debian.html
+echo "Holberton School" > /var/www/html/index.nginx-debian.html
+sudo chmod 644 /var/www/html/index.nginx-debian.html
+# start the daemon
+/etc/init.d/nginx restart
