@@ -8,6 +8,6 @@ echo "Holberton School" > /var/www/html/index.nginx-debian.html
 sudo chmod 644 /var/www/html/index.nginx-debian.html
 # activate redirect
 command="\\\n\t# Redirection\n\trewrite ^/redirect_me$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
-sed -i "/server_name _;/ a $command" /etc/nginx/sites-available/default
+sudo sed -i "/server_name _;/ a $command" /etc/nginx/sites-available/default
 # start the daemon
 /etc/init.d/nginx restart
