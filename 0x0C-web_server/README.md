@@ -47,6 +47,7 @@ This is an educational project to explore several concepts about Webserver confi
 -  [How to configure Nginx to use Custom Error pages](https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-to-use-custom-error-pages-on-ubuntu-14-04)
 -  [Serving static content with Nginx](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/)
 -  [Apache vs Nginx: practical considirations](https://www.digitalocean.com/community/tutorials/apache-vs-nginx-practical-considerations)
+-  [Begginer guide to Nginx](https://nginx.org/en/docs/beginners_guide.html)
 
 ### For reference
 
