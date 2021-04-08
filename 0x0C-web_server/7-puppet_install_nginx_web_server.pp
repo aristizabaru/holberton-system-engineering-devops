@@ -1,33 +1,33 @@
-# Configures Nweb server
-exec { 'Update packages DB':
+# Configures Nginx web server
+exec { 'Update_packages_DB':
   command => 'apt-get update -y',
   path    => ['/usr/bin', '/bin'],
   returns => [0,1]
 }
 
-exec { 'Install Nginx':
-  require => Exec['Update packages DB'],
+exec { 'Install_Nginx':
+  require => Exec['Update_packages_DB'],
   command => 'apt-get install nginx -y',
   path    => ['/usr/bin', '/bin'],
   returns => [0,1]
 }
 
-exec { 'Change index.html':
-  require => Exec['Install Nginx'],
+exec { 'Change_index':
+  require => Exec['Install_Nginx'],
   command => 'echo "Holberton School" > /var/www/html/index.nginx-debian.html',
   path    => ['/usr/bin', '/bin'],
   returns => [0,1]
 }
 
 exec { 'Redirection':
-  require     => Exec['Change index.html'],
+  require     => Exec['Change_index'],
   environment => ['command="\\\n\t# Redirection\n\trewrite ^/redirect_me/(.*)$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"'],
   command     => 'sed -i "/server_name _;/ a $command" /etc/nginx/sites-available/default',
   path        => ['/usr/bin', '/bin'],
   returns => [0,1]
 }
 
-exec { 'Start service':
+exec { 'Start_service':
   require => Exec['Redirection'],
   command => 'sudo service nginx start',
   path    => ['/usr/bin', '/bin'],
