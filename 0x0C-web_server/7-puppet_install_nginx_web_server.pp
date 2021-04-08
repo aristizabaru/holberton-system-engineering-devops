@@ -22,7 +22,7 @@ exec { 'Change_index':
 exec { 'Redirection':                                                                                                                          
   require     => Exec['Change_index'],                                                                                                         
   environment => ["command='\\\n\t# Redirection\n\trewrite ^/redirect_me/(.*)$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"],                                                                                       
-  command     => 'sed -i "/server_name _;/ a $command" /etc/nginx/sites-availablle/default',                                                                                                                                    
+  command     => "sed -i '/server_name _;/ a $command' /etc/nginx/sites-availablle/default",                                                                                                                                    
   path        => ['/usr/bin', '/bin'],                                                                                                         
   returns     => [0,1]                                                                                                                         
 }   
