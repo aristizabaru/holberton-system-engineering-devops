@@ -20,9 +20,8 @@ exec { 'Change_index':
 }
 
 exec { 'Header':                                                                                                                          
-  require     => Exec['Change_index'],                                                                                                         
-  environment => ['command_header="\\\n\t# Add header directive\n\tadd_header X-Served-By \$hostname;\n\t"'],                                                                                       
-  command     => "sed -i "/rewrite/ a $command_header" /etc/nginx/sites-available/default",                                                                                                                                    
+  require     => Exec['Change_index'],                                                                                                                                                                                               
+  command     => "sed -i '/rewrite/ a \n\t# Add header directive\n\tadd_header X-Served-By \$hostname;\n' /etc/nginx/sites-available/default",                                                                                                                                    
   path        => ['/usr/bin', '/bin'],                                                                                                         
   returns     => [0,1]                                                                                                                         
 }   
