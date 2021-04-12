@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Install nginx server
+apt-get update
+apt-get install haproxy -y
+# create config file
+cp /etc/haproxy/haproxy.cfg  /etc/haproxy/haproxy.cfg_backup
+# append global config
+echo -e "global\n\tdaemon" > /etc/haproxy/haproxy.cfg
+# append defaults config
+echo -e "\ndefaults\n\tmode http\n\ttimeout connect 5000\n\ttimeout client  50000\n\ttimeout server  50000" >> /etc/haproxy/haproxy.cfg
+# append frontend
+echo -e "\nfrontend http_front\n\tbind *:80\n\tdefault_backend http_back" >> /etc/haproxy/haproxy.cfg
+# append backend
+echo -e "\nbackend http_back\n\tbalance roundrobin\n\tserver 2210-web-01 34.75.110.34:80\n\tserver 2210-web-02 35.229.72.142:80" >> /etc/haproxy/haproxy.cfg
+# start haproxy
+sudo /etc/init.d/haproxy start
