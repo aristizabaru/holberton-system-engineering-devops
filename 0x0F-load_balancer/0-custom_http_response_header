@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Install nginx server
+apt-get update
+apt-get install nginx -y
+# change content of default_server
+sudo chmod 666 /var/www/html/index.nginx-debian.html
+echo "Holberton School" > /var/www/html/index.nginx-debian.html
+sudo chmod 644 /var/www/html/index.nginx-debian.html
+# activate redirect
+command="\\\n\t# Redirection\n\trewrite ^/redirect_me/(.*)$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
+sed -i "/server_name _;/ a $command" /etc/nginx/sites-available/default
+# setup error page
+echo "Ceci n'est pas une page" > /usr/share/nginx/html/custom_404.html
+command_error="\\\n\t# Error page\n\terror_page 404 /custom_404.html;\n\tlocation = /custom_404.html {\n\t\troot /usr/share/nginx/html;\n\t\tinternal;\n\t}"
+sed -i "/rewrite/ a $command_error" /etc/nginx/sites-available/default
+# setup header directive X-Served-By
+command_header="\\\n\t# Add header directive\n\tadd_header X-Served-By \$hostname;\n\t"
+sed -i "/rewrite/ a $command_header" /etc/nginx/sites-available/default
+# start the daemon
+/etc/init.d/nginx restart
