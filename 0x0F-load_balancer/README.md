@@ -33,6 +33,7 @@ This is an educational project to explore the concept of load balancer
 -  [How to get a docker container ip addres](https://www.freecodecamp.org/news/how-to-get-a-docker-container-ip-address-explained-with-examples/)
 -  [HAProxy crash course](https://www.youtube.com/watch?v=qYnA2DFEELw)
 -  [Configure Nginx](https://www.linode.com/docs/guides/how-to-configure-nginx/)
+-  [Install HAProxy load balancer on CentOS](https://upcloud.com/community/tutorials/haproxy-load-balancer-centos/)
 
 ### Concepts
 
