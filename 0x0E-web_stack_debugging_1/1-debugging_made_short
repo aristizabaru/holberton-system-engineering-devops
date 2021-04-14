@@ -2,4 +2,4 @@
 # Debug server
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 service nginx restart
-sudo rm /run/nginx.pid
+rm /run/nginx.pid
