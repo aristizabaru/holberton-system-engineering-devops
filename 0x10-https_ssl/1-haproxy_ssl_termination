@@ -14,7 +14,7 @@ defaults
 
 frontend http_front
         bind *:80
-        bind *:443 ssl crt /etc/haproxy/haproxy_www.pem
+        bind *:443 ssl crt /etc/haproxy/key_www.pem
         default_backend http_back
 
 backend http_back
