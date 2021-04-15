@@ -1,0 +1,23 @@
+global
+        daemon
+        # Default ciphers to use on SSL-enabled listening sockets.
+        # For more information, see ciphers(1SSL). This list is from:
+        #  https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/
+        ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
+        ssl-default-bind-options no-sslv3
+
+defaults
+        mode http
+        timeout connect 5000
+        timeout client  50000
+        timeout server  50000
+
+frontend http_front
+        bind *:80
+        bind *:443 ssl crt /etc/haproxy/haproxy.pem
+        default_backend http_back
+
+backend http_back
+        balance roundrobin
+        server 2210-web-01 34.75.110.34:80
+        server 2210-web-02 35.229.72.142:80
