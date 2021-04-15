@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Configure your domain zone so that the subdomain www points to Load Balancer
+
+function find_record() {
+   dig +nocmd "$1" +noall +answer | awk '{print $4}'
+}
+
+function find_ip() {
+   dig "$1" +short
+}
+
+if [ "$#" -eq 2 ]; then
+   echo "The subdomain $2 is a $( find_record "$1" ) record and points to $( find_ip "$2.$1" )"
+else
+   echo "The subdomain www is a $( find_record "$1" ) record and points to $( find_ip "www.$1" )"
+   echo "The subdomain lb-01 is a $( find_record "$1" ) record and points to $( find_ip "lb-01.$1" )"
+   echo "The subdomain web-01 is a $( find_record "$1" ) record and points to $( find_ip "web-01.$1" )"
+   echo "The subdomain web-02 is a $( find_record "$1" ) record and points to $( find_ip "web-02.$1" )"
+fi
