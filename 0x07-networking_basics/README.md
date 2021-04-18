@@ -93,7 +93,7 @@ In this project we will mainly focus on:
 
 The image bellow describes more concretely how you can relate to every level.
 
-![OSI Model](images/2.jpg)
+![OSI Model](images/2.jpeg)
 
 Questions:
 
@@ -113,7 +113,7 @@ How is the OSI model organized?
 
 **[1-types_of_network](1-types_of_network)**
 
-![network](images/3.jpg)
+![network](images/3.jpeg)
 
 LAN connect local devices together, WAN connects LANs together, and WANs are operating over the Internet.
 
@@ -141,7 +141,7 @@ What network do you use when you browse www.holbertonschool.com from your smartp
 
 **[2-MAC_and_IP_address](2-MAC_and_IP_address)**
 
-![MAC address](images/4.jpg)
+![MAC address](images/4.jpeg)
 
 Questions:
 
@@ -161,7 +161,7 @@ What is an IP address?
 
 **[3-UDP_and_TCP](3-UDP_and_TCP)**
 
-![MAC address](images/5.jpg)
+![MAC address](images/5.jpeg)
 
 Let’s fill the empty parts in the drawing above.
 
