@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # nginx must be running as nginx user and listening on all active IPs on port 8080
 /etc/init.d/apache2 stop
-sed -i -e 's/#user www-data;/user nginx;/' /etc/nginx/nginx.conf
-sed -i -e 's/80/8080/g' /etc/nginx/sites-available/default
-sudo -u nginx service nginx restart
+sed -i 's/80/8080/g' /etc/nginx/sites-enabled/default
+chmod a+rwx /etc/nginx/nginx.conf
+sudo -u nginx service nginx start
