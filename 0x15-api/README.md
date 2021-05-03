@@ -34,6 +34,8 @@ This is a perfect example of a task that is not suited for Bash scripting, so le
 
 ### Python dependencies
 
+**[requirements.txt](requirements.txt)**
+
 -  autopep8==1.5.7
 -  certifi==2020.12.5
 -  chardet==4.0.0
