@@ -11,12 +11,16 @@ import sys
 def make_request(id):
     """make request to end points"""
     # Config
+    data = list()
     user_r = "https://jsonplaceholder.typicode.com/users/" + id
     todo_r = "https://jsonplaceholder.typicode.com/todos/?userId=" + id
     # Requests
     response_user = requests.get(user_r)
     response_todo = requests.get(todo_r)
-    data = [response_user.json(), response_todo.json()]
+    if response_user.status_code == 200:
+        data.append(response_user.json())
+    if response_todo.status_code == 200:
+        data.append(response_todo.json())
     return(data)
 
 
@@ -24,14 +28,17 @@ def print_data(data):
     """print json data"""
     if len(data[0]) != 0:
         # Print results
-        completed_task = list(filter(completed, data[1]))
-        print("Employee {} is done "
-              "with tasks ({}/{}):".format(data[0]['name'],
-                                           len(completed_task),
-                                           len(data[1])))
-        if len(completed_task) != 0:
+        if len(data) > 1:
+            completed_task = list(filter(completed, data[1]))
+            print("Employee {} is done "
+                  "with tasks ({}/{}):".format(data[0]['name'],
+                                               len(completed_task),
+                                               len(data[1])))
             for task in completed_task:
                 print('\t {}'.format(task['title']))
+        else:
+            print("Employee {} is done "
+                  "with tasks (0/{0):".format(data[0]['name']))
 
 
 def completed(element):
