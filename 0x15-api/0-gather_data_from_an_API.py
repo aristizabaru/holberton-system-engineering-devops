@@ -22,15 +22,14 @@ def make_request(id):
 
 def print_data(data):
     """print json data"""
-    if len(data[0]) == 0:
-        print("No result")
-    else:
+    if len(data[0]) != 0:
         # Print results
         completed_task = list(filter(completed, data[1]))
         print("Employee {} is done "
               "with tasks ({}/{}):".format(data[0]['name'],
                                            len(completed_task),
                                            len(data[1])))
+        if len(completed_task) != 0.
         for task in completed_task:
             print('\t {}'.format(task['title']))
 
