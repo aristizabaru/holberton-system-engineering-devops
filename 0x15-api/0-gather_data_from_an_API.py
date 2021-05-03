@@ -29,9 +29,9 @@ def print_data(data):
               "with tasks ({}/{}):".format(data[0]['name'],
                                            len(completed_task),
                                            len(data[1])))
-        if len(completed_task) != 0.
-        for task in completed_task:
-            print('\t {}'.format(task['title']))
+        if len(completed_task) != 0:
+            for task in completed_task:
+                print('\t {}'.format(task['title']))
 
 
 def completed(element):
