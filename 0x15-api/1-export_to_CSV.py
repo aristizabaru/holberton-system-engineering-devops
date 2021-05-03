@@ -29,13 +29,10 @@ def export_csv(data):
         dict_.update({'username': username})
         dict_.pop('id')
         csv_data.append(dict_)
-    for item in csv_data:
-        for key, value in item.items():
-            item[key] = "'{}'".format(value)
-    print(csv_data)
     with open(str(data[0]['id']) + '.csv', 'w', newline='') as fd:
         fieldnames = ['userId', 'username', 'completed', 'title']
-        writer = csv.DictWriter(fd, fieldnames=fieldnames)
+        writer = csv.DictWriter(
+            fd, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
         # writer.writeheader()
         for item in csv_data:
             writer.writerow(item)
