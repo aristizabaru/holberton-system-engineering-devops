@@ -10,17 +10,9 @@ import sys
 # Process functions
 def make_request(id):
     """make request to end points"""
-    # Config
-    data = list()
     user_r = "https://jsonplaceholder.typicode.com/users/" + id
-    todo_r = "https://jsonplaceholder.typicode.com/todos/?userId=" + id
-    # Requests
-    response_user = requests.get(user_r)
-    response_todo = requests.get(todo_r)
-    if response_user.status_code == 200:
-        data.append(response_user.json())
-    if response_todo.status_code == 200:
-        data.append(response_todo.json())
+    todo_r = "https://jsonplaceholder.typicode.com/todos/"+"?userId=" + id
+    data = [requests.get(user_r).json(), requests.get(todo_r).json()]
     return(data)
 
 
