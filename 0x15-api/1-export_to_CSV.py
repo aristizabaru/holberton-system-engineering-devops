@@ -11,8 +11,8 @@ import sys
 def make_request(id):
     """make request to end points"""
     # Config
-    user_r = "https://jsonplaceholder.typicode.com/users/" + id
-    todo_r = "https://jsonplaceholder.typicode.com/todos/?userId=" + id
+    user_r = "https://jsonplaceholder.typicode.com/users/{}".format(id)
+    todo_r = "https://jsonplaceholder.typicode.com/todos/?userId={}".format(id)
     # Requests
     response_user = requests.get(user_r)
     response_todo = requests.get(todo_r)
