@@ -30,7 +30,8 @@ def export_json(data):
     for key, value in json_data.items():
         for dict_ in data[1]:
             if dict_['userId'] == int(key):
-                value.append({"username": data[0][int(key) - 1]["username"], "task": dict_["title"],
+                value.append({"username": data[0][int(key) - 1]["username"],
+                              "task": dict_["title"],
                               "completed": dict_["completed"]})
             elif dict_['userId'] > int(key):
                 break
@@ -45,6 +46,5 @@ def main():
     export_json(data)
 
 
-    #  "username": data[0]["username"]
 if __name__ == "__main__":
     main()
