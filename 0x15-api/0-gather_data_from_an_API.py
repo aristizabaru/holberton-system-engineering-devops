@@ -11,31 +11,28 @@ import sys
 def make_request(id):
     """make request to end points"""
     user_r = "https://jsonplaceholder.typicode.com/users/" + id
-    todo_r = "https://jsonplaceholder.typicode.com/todos/"+"?userId=" + id
+    todo_r = "https://jsonplaceholder.typicode.com/todos/?userId=" + id
     data = [requests.get(user_r).json(), requests.get(todo_r).json()]
     return(data)
 
 
 def print_data(data):
     """print json data"""
-    if len(data[0]) != 0:
-        # Print results
-        if len(data) > 1:
-            completed_task = list(filter(completed, data[1]))
-            print("Employee {} is done "
-                  "with tasks ({}/{}):".format(data[0]['name'],
-                                               len(completed_task),
-                                               len(data[1])))
-            for task in completed_task:
-                print('\t {}'.format(task['title']))
-        else:
-            print("Employee {} is done "
-                  "with tasks (0/{0):".format(data[0]['name']))
+    user_name = data[0]["name"]
+    completed_task = task = 0
 
+    for item in data[1]:
+        task += 1
+        if item['completed']:
+            completed_task += 1
 
-def completed(element):
-    """Filter completed todos"""
-    return element['completed']
+    print("Employee {} is done with tasks ({}/{}):".format(user_name,
+                                                           completed_task,
+                                                           task))
+
+    for item in data[1]:
+        if item['completed'] is True:
+            print('\t {}'.format(item['title']))
 
 
 def main():
