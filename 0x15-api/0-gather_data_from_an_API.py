@@ -26,9 +26,9 @@ def print_data(data):
         if item['completed']:
             completed_task += 1
 
-    print("Employee {} is done with tasks ({}/{}):".format(user_name,
-                                                           completed_task,
-                                                           task))
+    print("Employee {} is done with tasks({}/{}):".format(user_name,
+                                                          completed_task,
+                                                          task))
 
     for item in data[1]:
         if item['completed'] is True:
