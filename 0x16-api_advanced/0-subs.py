@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """module 0-subs.py
 
 Queries the Reddit API and returns the number of subscribers
