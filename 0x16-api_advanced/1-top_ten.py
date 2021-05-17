@@ -13,15 +13,22 @@ def top_ten(subreddit):
         LIMIT = 10
         HEADERS = {'User-Agent': 'Python:Holberton School '
                    'API project:v1.0.0 (by /u/aristizabaru)'}
-        END_POINT = 'https://www.reddit.com/r/{}/hot.json?limit={}'\
+        END_POINT = 'https://www.reddit.com/r/{}/hot.json'\
                     .format(subreddit, LIMIT)
 
-        response = requests.get(END_POINT, headers=HEADERS)
+        response = requests.get(
+            END_POINT,
+            headers=HEADERS,
+            params={'limit': LIMIT})
+
         if response.status_code == requests.codes.ok:
             nodes = response.json().get('data').get('children')
 
-            for item in nodes:
-                print(item.get('data').get('title'))
+            if len(nodes) is not None:
+                for item in nodes:
+                    print(item.get('data').get('title'))
+            else:
+                print(None)
         else:
             print(None)
     else:
