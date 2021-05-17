@@ -1,13 +1,15 @@
 #!/usr/bin/python3
 """module 1-top_ten.py
 
-Prints the titles of the first 10 hot posts listed for a given subreddit.
+Prints the titles of the first 10 hot posts listed
+for a given subreddit.
 """
 import requests
 
 
 def top_ten(subreddit):
-    """Prints the titles of the first 10 hot posts listed for a given subreddit"""
+    """Prints the titles of the first 10 hot posts listed
+    for a given subreddit"""
 
     if subreddit is not None and type(subreddit) is str:
         LIMIT = 10
@@ -24,7 +26,7 @@ def top_ten(subreddit):
         if response.status_code == requests.codes.ok:
             nodes = response.json().get('data').get('children')
 
-            if len(nodes) is not None:
+            if len(nodes) is not None and nodes[0].get('kind') == 't3':
                 for item in nodes:
                     print(item.get('data').get('title'))
             else:
