@@ -41,4 +41,10 @@ def recurse(subreddit, hot_list=[], next=True, after=''):
                         #     node_list['after']))
                         # print('*'*50)
                         recurse(subreddit, hot_list, False, node_list['after'])
+                else:
+                    return None
+            else:
+                return None
+        else:
+            return None
     return hot_list
