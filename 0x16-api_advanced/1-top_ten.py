@@ -22,5 +22,7 @@ def top_ten(subreddit):
 
             for item in nodes:
                 print(item.get('data').get('title'))
+        else:
+            print(None)
     else:
         print(None)
