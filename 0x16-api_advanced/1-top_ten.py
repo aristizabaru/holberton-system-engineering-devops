@@ -24,11 +24,11 @@ def top_ten(subreddit):
             params={'limit': LIMIT})
 
         if response.status_code == requests.codes.ok:
-            nodes = response.json().get('data').get('children')
+            nodes = response.json()['data']['children']
 
             if len(nodes) is not None and nodes[0].get('kind') == 't3':
                 for item in nodes:
-                    print(item.get('data').get('title'))
+                    print(item['data']['title'])
             else:
                 print(None)
         else:
