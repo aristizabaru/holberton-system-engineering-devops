@@ -8,8 +8,8 @@ import requests
 
 
 def recurse(subreddit, hot_list=[], next=True, after=''):
-    """Returns a list containing the titles of all hot 
-    articles for a given subreddit."""
+    """Returns a list containing the titles of all hot
+     articles for a given subreddit."""
 
     # base case
     if next:
